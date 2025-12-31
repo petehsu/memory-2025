@@ -1,0 +1,1072 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+img {
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
+/* 隐藏滚动条 */
+html {
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE/Edge */
+}
+
+html::-webkit-scrollbar {
+    display: none;
+    /* Chrome/Safari/Opera */
+}
+
+html,
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: #f8f8f8;
+    color: #333;
+}
+
+/* 3D Scene Container */
+.scene-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    perspective: 1200px;
+    overflow: hidden;
+    background: transparent;
+    z-index: 10;
+}
+
+/* 透视网格画布 */
+.grid-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    background: #f5f5f7;
+}
+
+/* 动态光照层 */
+.light-orbs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.light-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    transition: transform 0.3s ease-out, opacity 0.5s ease;
+}
+
+.light-orb.orb1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 245, 230, 0.8) 0%, transparent 70%);
+    top: 20%;
+    left: 30%;
+}
+
+.light-orb.orb2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(240, 248, 255, 0.7) 0%, transparent 70%);
+    top: 50%;
+    right: 20%;
+}
+
+.light-orb.orb3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 250, 240, 0.6) 0%, transparent 70%);
+    bottom: 20%;
+    left: 50%;
+}
+
+/* 边缘柔化遮罩 - 使用多层渐变实现柔和过渡 */
+/* Gradual Blur 边缘模糊效果 (inspired by ReactBits) */
+.gradual-blur {
+    position: fixed;
+    pointer-events: none;
+    z-index: 50;
+}
+
+.gradual-blur-top,
+.gradual-blur-bottom {
+    left: 0;
+    right: 0;
+    height: 120px;
+}
+
+.gradual-blur-top {
+    top: 0;
+}
+
+.gradual-blur-bottom {
+    bottom: 0;
+}
+
+.gradual-blur-left,
+.gradual-blur-right {
+    top: 0;
+    bottom: 0;
+    width: 120px;
+}
+
+.gradual-blur-left {
+    left: 0;
+}
+
+.gradual-blur-right {
+    right: 0;
+}
+
+.gradual-blur-layer {
+    position: absolute;
+    inset: 0;
+}
+
+/* 顶部模糊层 */
+.gradual-blur-top .layer-1 {
+    mask-image: linear-gradient(to top, transparent 0%, black 20%, black 40%, transparent 60%);
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 20%, black 40%, transparent 60%);
+    backdrop-filter: blur(0.5px);
+    -webkit-backdrop-filter: blur(0.5px);
+}
+
+.gradual-blur-top .layer-2 {
+    mask-image: linear-gradient(to top, transparent 20%, black 40%, black 60%, transparent 80%);
+    -webkit-mask-image: linear-gradient(to top, transparent 20%, black 40%, black 60%, transparent 80%);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+}
+
+.gradual-blur-top .layer-3 {
+    mask-image: linear-gradient(to top, transparent 40%, black 60%, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, transparent 40%, black 60%, black 80%, transparent 100%);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.gradual-blur-top .layer-4 {
+    mask-image: linear-gradient(to top, transparent 60%, black 80%);
+    -webkit-mask-image: linear-gradient(to top, transparent 60%, black 80%);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+/* 底部模糊层 */
+.gradual-blur-bottom .layer-1 {
+    mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 40%, transparent 60%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 40%, transparent 60%);
+    backdrop-filter: blur(0.5px);
+}
+
+.gradual-blur-bottom .layer-2 {
+    mask-image: linear-gradient(to bottom, transparent 20%, black 40%, black 60%, transparent 80%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 20%, black 40%, black 60%, transparent 80%);
+    backdrop-filter: blur(1px);
+}
+
+.gradual-blur-bottom .layer-3 {
+    mask-image: linear-gradient(to bottom, transparent 40%, black 60%, black 80%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 40%, black 60%, black 80%, transparent 100%);
+    backdrop-filter: blur(2px);
+}
+
+.gradual-blur-bottom .layer-4 {
+    mask-image: linear-gradient(to bottom, transparent 60%, black 80%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 60%, black 80%);
+    backdrop-filter: blur(4px);
+}
+
+/* 左边模糊层 */
+.gradual-blur-left .layer-1 {
+    mask-image: linear-gradient(to left, transparent 0%, black 20%, black 40%, transparent 60%);
+    backdrop-filter: blur(0.5px);
+}
+
+.gradual-blur-left .layer-2 {
+    mask-image: linear-gradient(to left, transparent 20%, black 40%, black 60%, transparent 80%);
+    backdrop-filter: blur(1px);
+}
+
+.gradual-blur-left .layer-3 {
+    mask-image: linear-gradient(to left, transparent 40%, black 60%, black 80%, transparent 100%);
+    backdrop-filter: blur(2px);
+}
+
+.gradual-blur-left .layer-4 {
+    mask-image: linear-gradient(to left, transparent 60%, black 80%);
+    backdrop-filter: blur(4px);
+}
+
+/* 右边模糊层 */
+.gradual-blur-right .layer-1 {
+    mask-image: linear-gradient(to right, transparent 0%, black 20%, black 40%, transparent 60%);
+    backdrop-filter: blur(0.5px);
+}
+
+.gradual-blur-right .layer-2 {
+    mask-image: linear-gradient(to right, transparent 20%, black 40%, black 60%, transparent 80%);
+    backdrop-filter: blur(1px);
+}
+
+.gradual-blur-right .layer-3 {
+    mask-image: linear-gradient(to right, transparent 40%, black 60%, black 80%, transparent 100%);
+    backdrop-filter: blur(2px);
+}
+
+.gradual-blur-right .layer-4 {
+    mask-image: linear-gradient(to right, transparent 60%, black 80%);
+    backdrop-filter: blur(4px);
+}
+
+.world {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    z-index: 2;
+    transition: transform 0.15s ease-out;
+}
+
+/* Scroll Space */
+.scroll-space {
+    height: var(--scroll-height, 20000px);
+    pointer-events: none;
+}
+
+/* Photo Cards */
+.photo-card {
+    position: absolute;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    transition: opacity 0.8s ease, transform 0.4s ease-out;
+}
+
+/* 照片微动动画 */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* 图片淡入动画 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.photo-card img {
+    pointer-events: auto;
+    /* 确保可以点击 */
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 3px;
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.08),
+        0 4px 20px rgba(0, 0, 0, 0.04);
+    background: white;
+    padding: 4px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation:
+        float var(--float-duration, 6s) ease-in-out infinite,
+        fadeIn 0.6s ease-out forwards;
+    animation-delay: var(--float-delay, 0s), 0s;
+}
+
+.photo-card:hover img {
+    transform: scale(1.08);
+    box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.12),
+        0 12px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* 鼠标附近拨动效果 */
+.photo-card.nudged {
+    transition: transform 0.2s ease-out;
+}
+
+.photo-card .date-label {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    color: #bbb;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+body.dark-mode #gridCanvas {
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+body.dark-mode .end-goodbye-standalone {
+    color: #fff;
+    transition: color 1s ease;
+}
+
+.photo-card:hover .date-label {
+    opacity: 1;
+}
+
+/* UI Overlay */
+.ui-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: #aaa;
+    font-size: 0.85rem;
+    font-weight: 300;
+    transition: opacity 0.5s ease;
+}
+
+.scroll-arrow {
+    font-size: 1.2rem;
+    margin-top: 6px;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+.date-indicator {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.date-indicator.visible {
+    opacity: 1;
+}
+
+.date-indicator .month {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #555;
+    letter-spacing: 0.3em;
+}
+
+.date-indicator .year {
+    font-size: 0.8rem;
+    color: #aaa;
+    letter-spacing: 0.4em;
+}
+
+.progress-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 0, 0, 0.03);
+    z-index: 100;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, rgba(200, 200, 200, 0.5), rgba(150, 150, 150, 0.8));
+    transition: width 0.1s linear;
+}
+
+/* End Screen */
+.end-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease, visibility 1s ease;
+}
+
+.end-screen.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* 瀑布流照片墙背景 */
+.stats-photo-wall {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index: 0;
+    overflow: hidden;
+    /* 隐藏溢出的部分 */
+}
+
+.photo-wall-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    animation: scrollUp 40s linear infinite;
+    /* 让列的内容可以超出容器 */
+    min-height: 200%;
+    /* 确保有足够高度来滚动 */
+}
+
+.photo-wall-column:nth-child(even) {
+    animation: scrollDown 40s linear infinite;
+}
+
+.photo-wall-column img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    opacity: 0.8;
+    flex-shrink: 0;
+    /* 防止图片被压缩 */
+}
+
+@keyframes scrollUp {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-50%);
+    }
+}
+
+@keyframes scrollDown {
+    0% {
+        transform: translateY(-50%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* 覆盖层改为聚光灯效果 */
+.stats-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle 200px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            transparent 0%,
+            rgba(255, 255, 255, 0.85) 100%);
+    z-index: 1;
+    pointer-events: none;
+    transition: background 0.1s ease;
+}
+
+.end-screen .end-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* 3D 结尾序列 */
+.end-sequence-item {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+}
+
+.end-video-container {
+    width: 1200px;
+    /* 再次加大尺寸 */
+    max-width: 90vw;
+    aspect-ratio: 16/9;
+    /* 强制 16:9 比例，占位 */
+    border-radius: 40px;
+    /* 加大圆角 */
+    overflow: hidden;
+    /* 确保圆角生效 */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    /* 加深阴影 */
+    background: #000;
+    transition: transform 1.5s cubic-bezier(0.25, 0.1, 0.25, 1), background-color 1s;
+    /* 慢速放大动画 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* 为绝对定位文字做参考 */
+}
+
+.end-video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: opacity 1s ease;
+}
+
+/* 覆盖在视频上的文字 */
+.video-overlay-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 响应式字体大小，最大3rem，防止溢出 */
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 1.5s ease 0.2s;
+    /* 稍微加快显示 */
+    white-space: nowrap;
+    pointer-events: none;
+    width: 100%;
+    text-align: center;
+}
+
+/* expanded 状态下启用鼠标事件 */
+.end-video-container.expanded .video-overlay-text {
+    pointer-events: auto;
+}
+
+/* 底部滚动提示 */
+.scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1rem;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: opacity 1s;
+    pointer-events: none;
+}
+
+.end-video-container.expanded .scroll-hint {
+    opacity: 1;
+    /* 放大后才显示提示 */
+}
+
+/* 独立的再见文本 */
+.end-goodbye-standalone {
+    font-size: 5rem;
+    font-weight: 300;
+    color: #333;
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: 0.2em;
+}
+
+/* 修复统计面板排版：去掉背景，纯文字展示 */
+.end-sequence-item .end-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    /* 去掉背景 */
+    padding: 40px;
+    /* border-radius: 30px; */
+    box-shadow: none;
+    /* 去掉阴影 */
+    width: 100vw;
+    /* 占满全屏宽度，利用 flex 居中 */
+    max-width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    color: #333;
+    /* 确保文字颜色可见 */
+}
+
+/* 这种模式下，原来的白色文字可能看不清，需要反色或者保持深色 */
+/* 假设背景是浅色网格，这里文字用深色 */
+
+/* 挥手动画 */
+.wave-emoji {
+    display: inline-block;
+    cursor: pointer;
+    transition: transform 0.3s;
+    pointer-events: auto;
+    /* 启用鼠标事件 */
+}
+
+.wave-emoji:hover {
+    animation: wave 1s infinite;
+    transform-origin: 70% 70%;
+}
+
+@keyframes wave {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    10% {
+        transform: rotate(14deg);
+    }
+
+    20% {
+        transform: rotate(-8deg);
+    }
+
+    30% {
+        transform: rotate(14deg);
+    }
+
+    40% {
+        transform: rotate(-4deg);
+    }
+
+    50% {
+        transform: rotate(10deg);
+    }
+
+    60% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+/* 放大后的状态 */
+.end-video-container.expanded {
+    background-color: #000;
+    /* 确保黑底 */
+    border-radius: 40px;
+    /* 保持圆角 */
+}
+
+.end-video-container.expanded video {
+    opacity: 0;
+    /* 视频淡出 */
+}
+
+.end-video-container.expanded .video-overlay-text {
+    opacity: 1;
+    /* 文字显现 */
+}
+
+/* 保持原比例 */
+
+
+.end-goodbye-text {
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: #333;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.end-content {
+    /* 液态玻璃效果 */
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    color: #333;
+    padding: 50px 40px;
+    border-radius: 30px;
+
+    /* 毛玻璃背景 */
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.9) 0%,
+            rgba(255, 255, 255, 0.7) 50%,
+            rgba(255, 255, 255, 0.85) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    /* 玻璃边框效果 */
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow:
+        /* 外发光 */
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        /* 内发光 */
+        inset 0 0 60px rgba(255, 255, 255, 0.3),
+        /* 顶部高光 */
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    /* 动画 */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.end-content:hover {
+    transform: translateY(-5px);
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.15),
+        inset 0 0 60px rgba(255, 255, 255, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.end-content h1 {
+    font-size: 5rem;
+    font-weight: 300;
+    letter-spacing: 0.4em;
+    margin-left: 0.4em;
+    /* 补偿 letter-spacing 造成的偏移 */
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.end-content p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.end-content .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 30px 0;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: inline;
+    font-size: inherit;
+    font-weight: 400;
+    color: #333;
+}
+
+.main-stat {
+    font-size: 1.3rem;
+    color: #555;
+    margin: 30px 0;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.poetry {
+    margin: 40px 0;
+    line-height: 2;
+    font-size: 1rem;
+    color: #666;
+}
+
+.poetry .dim {
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.restart-btn {
+    margin-top: 40px;
+    padding: 12px 30px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    background: transparent;
+    border: 1px solid #ddd;
+    color: #777;
+    cursor: pointer;
+    pointer-events: auto;
+    transition: all 0.3s ease;
+    letter-spacing: 0.1em;
+}
+
+.restart-btn:hover {
+    background: #333;
+    border-color: #333;
+    color: white;
+}
+
+/* 详情遮罩层 */
+.detail-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background: transparent;
+    /* 移除黑色背景，避免遮挡照片（照片在 world 的 stacking context 内） */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.detail-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: none;
+    /* 保持透明，让点击事件穿透到照片 */
+}
+
+/* 飞行的照片 */
+
+/* 独立的信息毛玻璃卡片 */
+.detail-glass-card {
+    position: absolute;
+    right: 12%;
+    top: 50%;
+    transform: translateY(-50%) translateX(50px);
+    width: 340px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 20px;
+    border: 1px solid rgba(200, 200, 200, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    color: #333;
+    /* 文字黑色 */
+    opacity: 0;
+    transition: all 0.5s ease 0.2s;
+    /* 延迟出现 */
+    z-index: 2005;
+    pointer-events: auto;
+    /* 信息卡片可以接收点击 */
+}
+
+.detail-overlay.active .detail-glass-card {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+.detail-date {
+    font-size: 3rem;
+    font-weight: 300;
+    color: #222;
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.info-item .label {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-item .value {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 500;
+}
+
+.color-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.color-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.divider {
+    height: 1px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 30px 0;
+}
+
+.detail-poetry {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    font-style: italic;
+}
+
+.close-btn {
+    display: none;
+}
+
+/* Loading */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loading-text {
+    text-align: center;
+    color: #999;
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+.loading-progress {
+    width: 180px;
+    height: 1px;
+    background: #eee;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.loading-bar {
+    height: 100%;
+    width: 0%;
+    background: #bbb;
+    transition: width 0.3s ease;
+}
+
+/* 语言切换按钮 - 毛玻璃效果 */
+.lang-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.8) 0%,
+            rgba(255, 255, 255, 0.5) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    pointer-events: auto;
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    letter-spacing: 1px;
+}
+
+.lang-btn:hover {
+    background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.8) 0%,
+            rgba(50, 50, 50, 0.9) 100%);
+    color: white;
+    transform: scale(1.08);
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .lang-btn {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.05) 100%);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .lang-btn:hover {
+    background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.3) 0%,
+            rgba(255, 255, 255, 0.15) 100%);
+}

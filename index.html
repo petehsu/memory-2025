@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory 2025 - 记忆空间</title>
+    <meta name="description" content="2025年的365天，用照片记录的记忆空间">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="loading-screen" id="loading">
+        <div class="loading-text">
+            <span>记忆加载中...</span>
+            <div class="loading-progress">
+                <div class="loading-bar" id="loadingBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 透视网格画布 -->
+    <canvas class="grid-canvas" id="gridCanvas"></canvas>
+
+    <div class="scene-container">
+        <div class="world" id="world"></div>
+    </div>
+
+    <!-- 动态光照球 -->
+    <div class="light-orbs" id="lightOrbs">
+        <div class="light-orb orb1" id="orb1"></div>
+        <div class="light-orb orb2" id="orb2"></div>
+        <div class="light-orb orb3" id="orb3"></div>
+    </div>
+
+    <!-- Gradual Blur 边缘模糊 -->
+    <div class="gradual-blur gradual-blur-top">
+        <div class="gradual-blur-layer layer-1"></div>
+        <div class="gradual-blur-layer layer-2"></div>
+        <div class="gradual-blur-layer layer-3"></div>
+        <div class="gradual-blur-layer layer-4"></div>
+    </div>
+    <div class="gradual-blur gradual-blur-bottom">
+        <div class="gradual-blur-layer layer-1"></div>
+        <div class="gradual-blur-layer layer-2"></div>
+        <div class="gradual-blur-layer layer-3"></div>
+        <div class="gradual-blur-layer layer-4"></div>
+    </div>
+    <div class="gradual-blur gradual-blur-left">
+        <div class="gradual-blur-layer layer-1"></div>
+        <div class="gradual-blur-layer layer-2"></div>
+        <div class="gradual-blur-layer layer-3"></div>
+        <div class="gradual-blur-layer layer-4"></div>
+    </div>
+    <div class="gradual-blur gradual-blur-right">
+        <div class="gradual-blur-layer layer-1"></div>
+        <div class="gradual-blur-layer layer-2"></div>
+        <div class="gradual-blur-layer layer-3"></div>
+        <div class="gradual-blur-layer layer-4"></div>
+    </div>
+
+    <div class="scroll-space" id="scrollSpace"></div>
+
+    <div class="ui-overlay">
+        <!-- 语言切换按钮 -->
+        <button class="lang-btn" id="langBtn" title="Switch Language">EN</button>
+
+        <div class="scroll-hint" id="scrollHint">
+            <span data-i18n-key="scrollHint">向下滚动穿越时间</span>
+            <div class="scroll-arrow">↓</div>
+        </div>
+        <div class="date-indicator" id="dateIndicator">
+            <span class="month" data-i18n-key="month">一月</span>
+            <span class="year">2025</span>
+        </div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="end-screen" id="endScreen">
+        <div class="end-content">
+            <h1 data-i18n-key="statsTitle">2025</h1>
+            <p class="subtitle" data-i18n-key="statsSubtitle">这就是我的 2025</p>
+            <p class="main-stat" data-i18n-key="mainStat">
+                我 <span class="stat-number" id="statBytes">0</span> bytes、<span class="stat-number"
+                    id="statPhotos">0</span> 张、<span class="stat-number" id="statPages">0</span> 页的 2025
+            </p>
+            <p class="poetry" data-i18n-key="poetry">
+                生命总是有遗憾的<br>
+                就像缺少的 25 张照片<br>
+                时间带走了一些瞬间，却留下了回忆的余温<br>
+                <span class="dim">那些未存留下来的空白，也是生活最真实的一部分</span>
+            </p>
+            <button class="restart-btn" data-i18n-key="restartBtn"
+                onclick="window.scrollTo({top:0, behavior:'smooth'})">重新开始</button>
+        </div>
+    </div>
+
+    <!-- 照片详情遮罩 -->
+    <div class="detail-overlay" id="detailOverlay">
+        <div class="close-btn" id="closeDetailBtn">×</div>
+
+        <!-- 独立的图片容器 -->
+        <div class="detail-photo-stage" id="detailPhotoStage"></div>
+
+        <!-- 独立的信息毛玻璃卡片 -->
+        <div class="detail-glass-card">
+            <h2 class="detail-date" id="detailDate">2025.01.01</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="label" data-i18n-key="detailWeather">天气</span>
+                    <span class="value" id="detailWeather">晴</span>
+                </div>
+                <div class="info-item">
+                    <span class="label" data-i18n-key="detailTemp">温度</span>
+                    <span class="value" id="detailTemp">15°C</span>
+                </div>
+                <div class="info-item">
+                    <span class="label" data-i18n-key="detailColor">主色调</span>
+                    <div class="color-dots" id="detailColor">
+                        <span class="color-dot" style="background:#888"></span>
+                        <span class="color-dot" style="background:#666"></span>
+                        <span class="color-dot" style="background:#444"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <p class="detail-poetry" id="detailPoetry">
+                生成的短句...
+            </p>
+        </div>
+    </div>
+
+    <script src="photos.js"></script>
+    <script src="cq_weather_2025.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+MIT License
+
+Copyright (c) 2025 Pete Hsu
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+--------------------------------------------------------------------------------
+
+ASSET LICENSE / 素材使用协议
+
+1. SOURCE CODE / 源代码
+   - Licensed under MIT License as stated above.
+   - 代码部分完全开源，可随意使用、修改。
+
+2. SELF-PORTRAITS / 个人自拍照
+   - You are free to use, copy, and distribute the author's self-portraits included in this repository.
+   - 作者本人的自拍照（如有）允许自由使用。
+
+3. GALLERY PHOTOS / 画廊摄影作品 (CRITICAL / 重要)
+   - All photos in the `images/gallery` folder (and their thumbnails) are copyrighted works by Pete Hsu, originally published on 500px.
+   - These photos are strictly for DEMONSTRATION PURPOSES ONLY within this project.
+   - ❌ YOU MAY NOT: Copy, modify, distribute, sell, or use these photos for any commercial or non-commercial purpose outside of this repository.
+   - ⚠️ 版权声明：`images/gallery` 及其子文件夹下的所有摄影作品均为作者 Pete Hsu 在 500px 发布的版权作品。严禁任何形式的转载、商用或二次分发。这些照片仅作为本项目演示素材存在。
+
+4. OTHER ASSETS / 其他素材
+   - Other UI assets (icons, etc.) are free to use under MIT License.
