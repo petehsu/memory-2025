@@ -768,6 +768,9 @@ body.dark-mode .end-goodbye-standalone {
 
     /* 动画 */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    /* 为绝对定位的 GitHub 图标提供参考 */
+    position: relative;
 }
 
 .end-content:hover {
@@ -776,6 +779,29 @@ body.dark-mode .end-goodbye-standalone {
         0 15px 40px rgba(0, 0, 0, 0.15),
         inset 0 0 60px rgba(255, 255, 255, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* GitHub 链接 */
+.github-link {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.github-link:hover {
+    color: #333;
+    transform: scale(1.1) rotate(10deg);
+}
+
+body.dark-mode .github-link {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+body.dark-mode .github-link:hover {
+    color: #fff;
 }
 
 .end-content h1 {

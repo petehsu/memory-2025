@@ -1,6 +1,7 @@
 # Memory 2025 | 记忆空间
 
 [![English](https://img.shields.io/badge/readme-English-blue)](README_en.md)
+[![Live Demo](https://img.shields.io/badge/demo-Run_Online-green)](https://memory-2025.pages.dev/)
 
 > "生活不止眼前的代码，还有诗和远方的照片。"
 

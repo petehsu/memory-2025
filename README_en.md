@@ -1,6 +1,7 @@
 # Memory 2025 | Memory Space
 
 [![中文](https://img.shields.io/badge/readme-%E4%B8%AD%E6%96%87-red)](README.md)
+[![Live Demo](https://img.shields.io/badge/demo-Run_Online-green)](https://memory-2025.pages.dev/)
 
 > "Life is not just about the code in front of you, but also about poetry and faraway & photos."
 
