@@ -1,10 +1,12 @@
 # Memory 2025 | 记忆空间
 
+[![English](https://img.shields.io/badge/readme-English-blue)](README_en.md)
+
 > "生活不止眼前的代码，还有诗和远方的照片。"
 
 用 340+ 张照片，构建一个可以穿梭的 3D 记忆宇宙。从 2025 年初到年末，在时间长河中自由飞行。
 
-![Preview](preview.png)
+![Preview](assets/banner.jpg)
 
 ## ✨ 核心特性
 

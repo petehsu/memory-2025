@@ -1,10 +1,12 @@
 # Memory 2025 | Memory Space
 
+[![中文](https://img.shields.io/badge/readme-%E4%B8%AD%E6%96%87-red)](README.md)
+
 > "Life is not just about the code in front of you, but also about poetry and faraway & photos."
 
 Using 340+ photos to build a traversable 3D memory universe. Fly freely through the river of time from the beginning to the end of 2025.
 
-![Preview](preview.png)
+![Preview](assets/banner.jpg)
 
 ## ✨ Core Features
 
