@@ -29,14 +29,18 @@ ASSET LICENSE / 素材使用协议
    - 代码部分完全开源，可随意使用、修改。
 
 2. SELF-PORTRAITS / 个人自拍照
-   - You are free to use, copy, and distribute the author's self-portraits included in this repository.
-   - 作者本人的自拍照（如有）允许自由使用。
+   - The author grants permission to use, copy, and distribute the self-portraits included in this repository ONLY for the purpose of demonstrating the functionality of this project.
+   - **RESTRICTIONS / 限制条款**:
+     - **No Defamation / 禁止诽谤**: You may NOT use the photos in any way that is unlawful, defamatory, libelous, obscene, or hateful. (严禁用于任何非法、诽谤、色情或仇恨言论)
+     - **No AI Training / 禁止 AI 训练**: You may NOT use the photos to train AI models, create Deepfakes, or generate synthetic media. (严禁用于 AI 深度伪造或模型训练)
+     - **No Commercial Endorsement / 禁止商业代言**: You may NOT use the photos to advertise products or imply endorsement of any commercial service. (严禁用于商业广告或暗示代言)
+     - **Attribution / 署名**: Use of these photos does not grant you the right to claim ownership or identity of the person depicted. (使用照片不代表你拥有照片中人物的身份)
 
 3. GALLERY PHOTOS / 画廊摄影作品 (CRITICAL / 重要)
    - All photos in the `images/gallery` folder (and their thumbnails) are copyrighted works by Pete Hsu, originally published on 500px.
    - These photos are strictly for DEMONSTRATION PURPOSES ONLY within this project.
    - ❌ YOU MAY NOT: Copy, modify, distribute, sell, or use these photos for any commercial or non-commercial purpose outside of this repository.
-   - ⚠️ 版权声明：`images/gallery` 及其子文件夹下的所有摄影作品均为作者 Pete Hsu 在 500px 发布的版权作品。严禁任何形式的转载、商用或二次分发。这些照片仅作为本项目演示素材存在。
+   - ⚠️ 版权声明：`images/gallery` 及其子文件夹下的所有摄影作品均为作者 Pete Hsu 在 500px 和图虫等平台发布的版权作品。严禁任何形式的转载、商用或二次分发。这些照片仅作为本项目演示素材存在。
 
 4. OTHER ASSETS / 其他素材
    - Other UI assets (icons, etc.) are free to use under MIT License.
